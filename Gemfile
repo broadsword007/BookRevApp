@@ -25,6 +25,8 @@ gem 'simple_form'
 
 gem 'responders'
 gem 'bootstrap-sass'
+gem 'devise'
+gem 'paperclip'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -1,4 +1,20 @@
-<p id="notice"><%= notice %></p>
 <h1>Book Edit Page</h1>
 
-<%= render 'form' %>
+<%= simple_form_for @book do |f| %>
+    <%= f.file_field :book_img %>
+    <%= f.input :title, label: "Book Title " %>
+    <%= f.input :description %>
+    <%= f.input :author, label: "Book Author" %>
+
+    <select name="book[category_id]">
+      <% Category.all.each do |cat| %>
+          <% if(@book.category.name==cat.name) %>
+            <option selected="selected" value=<%= cat.id %> > <%= cat.name%> </option>
+          <%else %>
+              <option value=<%= cat.id %> > <%= cat.name%> </option>
+          <% end %>
+      <% end %>
+    </select>
+
+    <%= f.button "submit" %>
+<% end %>

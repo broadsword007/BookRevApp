@@ -1,14 +1,63 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bookrevapp</title>
+    <title>Book Reviews</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="container">
 
+        <div class="navbar-header">
+          <%= link_to "Book Review", root_path , class: "navbar-brand" %>
+
+        </div>
+        <ul class="nav navbar-nav">
+          <li>
+            <% if user_signed_in? %>
+                <%= link_to "Log out", destroy_user_session_path, method: "delete"  %>
+            <% else%>
+              <li>
+                <%= link_to "Signup", new_user_registration_path %>
+              </li>
+              <li>
+                <%= link_to "Login", new_user_session_path %>
+              </li>
+          <% end %>
+
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button"> Categories <span class="caret"></span> </a>
+            <ul class="dropdown-menu" role="menu">
+              <% Category.all.each do |cat| %>
+                  <li class="<%= 'active' if (cat.name==@current_category or @current_category=="All") %>">
+                    <%= link_to cat.name, books_path(category: cat.name) %>
+                  </li>
+              <% end %>
+            </ul>
+          </li>
+
+          <li>
+            <% if user_signed_in? %>
+                <%= link_to "Add Book", new_book_path %>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+  <div class="container">
   <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
+  </div>
 </html>
+

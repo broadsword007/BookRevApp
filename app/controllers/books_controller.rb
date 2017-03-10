@@ -1,13 +1,32 @@
 class BooksController < ApplicationController
-  before_action :find_book, only: [:show, :edit, :destroy, :update]
+  before_action :find_book, only: [:edit, :destroy, :update]
   def index
-    @books=Book.all.order("created_at DESC");
+    if(params[:category]=="all" or params[:category]=="" or params[:category]==nil)
+      @books=Book.all
+      @current_category="All"
+    else
+      category=Category.find_by_name(params[:category])
+      if(category!=nil)
+        @books=category.books
+        @current_category=category.name
+      end
+      if(@books==nil)
+        redirect_back(fallback_location: books_path(category: "all"))
+      end
+    end
   end
   def new
+    if(!user_signed_in?)
+      redirect_to new_user_session_path
+    end
     @book=Book.new ;
   end
   def create
+    puts "\n\n Params are \n"
+    puts params
+    puts "\n\n\n"
     @book=Book.new(book_params)
+    @book.user_id=current_user.id
     if @book.save
       redirect_to root_path
     else
@@ -16,7 +35,7 @@ class BooksController < ApplicationController
   end
 
   def show
-
+    @book=Book.find(params[:id])
   end
 
   def destroy
@@ -35,9 +54,13 @@ class BooksController < ApplicationController
   end
   private
   def book_params
-    params.require(:book).permit(:title, :description, :author) ;
+
+    params.require(:book).permit(:title, :description, :author, :category_id, :book_img) ;
   end
   def find_book
+    if(!user_signed_in?)
+      redirect_to new_user_session_path
+    end
     @book=Book.find(params[:id])
   end
 end

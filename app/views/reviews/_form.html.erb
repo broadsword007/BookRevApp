@@ -1,0 +1,5 @@
+<%= simple_form_for([@book, @book.reviews.build]) do |f| %>
+    <%= f.input :rating, label: "Rating"%>
+    <%= f.input :comment, label: "Comments"%>
+    <%= f.button :submit %>
+<% end %>

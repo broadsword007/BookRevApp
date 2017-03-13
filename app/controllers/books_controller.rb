@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :find_book, only: [:edit, :destroy, :update]
+  before_action :check_user_signed_in, only: [:new, :create, :update, :destroy]
   def index
     if(params[:category]=="all" or params[:category]=="" or params[:category]==nil)
       @books=Book.all
@@ -36,6 +37,8 @@ class BooksController < ApplicationController
 
   def show
     @book=Book.find(params[:id])
+    @average_reviews=@book.reviews.average(:rating)
+    @review_count=@book.reviews.count
   end
 
   def destroy
@@ -62,5 +65,12 @@ class BooksController < ApplicationController
       redirect_to new_user_session_path
     end
     @book=Book.find(params[:id])
+    @average_reviews=@book.reviews.average(:rating)
+    puts "\n\n\n #{@average_reviews} \n\n\n"
+  end
+  def check_user_signed_in
+    if(!user_signed_in?)
+      redirect_to new_user_session
+    end
   end
 end

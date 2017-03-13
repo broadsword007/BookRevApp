@@ -1,7 +1,16 @@
 <h> Edit Rating</h>
 
 <%= simple_form_for [@book, @review] do |f| %>
-    <%= f.input :rating, label: "Rating"%>
+    <div id="rating-form">
+      <label>Rating</label>
+    </div>
     <%= f.input :comment, label: "Comments"%>
     <%= f.button :submit %>
 <% end %>
+<script>
+  $('#rating-form').raty({
+      path: '/assets/',
+      scoreName: 'review[rating]',
+      score: <%= @review.rating %>
+  });
+</script>

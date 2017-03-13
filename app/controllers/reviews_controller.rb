@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :find_book, only: [:create, :new, :edit, :update, :destroy]
   before_action :find_review, only: [:edit, :update, :destroy]
+  before_action :check_user_signed_in, only: [:new, :create, :edit, :update, :destroy]
   def new
     @reviews=Review.new
   end
@@ -18,7 +19,7 @@ class ReviewsController < ApplicationController
 
   end
   def update
-    if(@review.save(review_params))
+    if @review.update(review_params)
       redirect_to book_path(@book)
     else
       render :edit
@@ -37,5 +38,10 @@ class ReviewsController < ApplicationController
   end
   def find_review
     @review=Review.find(params[:id])
+  end
+  def check_user_signed_in
+    if(!user_signed_in?)
+      redirect_to new_user_session
+    end
   end
 end

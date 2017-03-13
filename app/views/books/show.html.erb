@@ -4,8 +4,11 @@
   </div>
   <div class="col-md-8">
       <h2> <%= @book.title %> </h2>
+      <div id="average-rating" data-score=<%= @average_reviews %> >
+
+      </div> <%= "  based on #{@review_count} reviews" %>
       <p> <%= @book.author %></p>
-        <p> <%= @book.description %> </p>
+        <p class="text-justify"> <%= @book.description %> </p>
       <p>
   </div>
 </div>
@@ -21,4 +24,22 @@
     <%= link_to "Edit Book", edit_book_path(@book) %>  |
     <%= link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure you wanna delete this Book?"} %>
 <%end%>
-</p>
+<script>
+  $('.review-rating').raty(
+  {
+      readOnly: true,
+      score: function() {
+          return $(this).attr('data-score');
+      },
+      path: '/assets/'
+  });
+</script>
+<script>
+    $('#average-rating').raty({
+        readOnly: true,
+        score: function() {
+            return $(this).attr('data-score');
+        },
+        path: '/assets/'
+    });
+</script>

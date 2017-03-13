@@ -1,4 +1,4 @@
-<p> <%= review.rating %></p>
+<div class="review-rating" data-score="<%= review.rating %>"></div>
 <P> <%= review.comment %></P>
 <%if user_signed_in? and review.user_id==current_user.id %>
 <%= link_to "Edit" , edit_book_review_path(review.book, review)%> |

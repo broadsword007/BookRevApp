@@ -3,21 +3,27 @@
   <head>
     <title>Book Reviews</title>
     <%= csrf_meta_tags %>
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <header>
-    <nav class="navbar navbar-default">
-      <div class="container">
+    <nav class="nav-wrapper">
 
-        <div class="navbar-header">
-          <%= link_to "Book Review", root_path , class: "navbar-brand" %>
+      <%= link_to "Book Review", root_path , class: "brand-logo" %>
 
+        <div class="right">
+          <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select Category</a>
+
+          <!-- Dropdown Structure -->
+          <ul id='dropdown1' class='dropdown-content'>
+            <% Category.all.each do |cat| %>
+                <li><a href="<%=books_path(category: cat.name) %>"> <%= cat.name %> </a></li>
+            <% end %>
+          </ul>
         </div>
-        <ul class="nav navbar-nav">
-          <li>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
             <% if user_signed_in? %>
                 <%= link_to "Log out", destroy_user_session_path, method: "delete"  %>
             <% else%>
@@ -27,38 +33,71 @@
               <li>
                 <%= link_to "Login", new_user_session_path %>
               </li>
-          <% end %>
 
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button"> Categories <span class="caret"></span> </a>
-            <ul class="dropdown-menu" role="menu">
-              <% Category.all.each do |cat| %>
-                  <li class="<%= 'active' if (cat.name==@current_category or @current_category=="All") %>">
-                    <%= link_to cat.name, books_path(category: cat.name) %>
-                  </li>
-              <% end %>
-            </ul>
-          </li>
-
-          <li>
-            <% if user_signed_in? %>
-                <%= link_to "Add Book", new_book_path %>
             <% end %>
-          </li>
         </ul>
-      </div>
-
     </nav>
   </header>
-  <div class="container">
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <% if user_signed_in? %>
+        <div class="fixed-action-btn add-button" >
+          <a class="btn-floating btn-large red waves-effect waves-light tooltipped teal lighten-2" data-position="bottom" data-delay="50" data-tooltip="Add a new book" href="<%= new_book_path %>">
+            <i class="large material-icons">add</i>
+          </a>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
-  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col l6"> <a class="white-text">© 2017 Paradox Software Solutions</a></div>
+          <div class="col l6">
+            <div class="right">
+              <%= image_tag "twitter.png", class: "waves-effect waves-red social-media-image" %>
+              <%= image_tag "facebook.png", class: "waves-effect waves-red social-media-image" %>
+              <%= image_tag "instagram.png", class: "waves-effect waves-red social-media-image" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </html>
 
+<script>
+  $(document).ready()
+  {
+      var n= "<%= notice %>" ;
+      var a= "<%= alert %>";
+      if(n!="")
+      {
+          Materialize.toast(n, 4000, "rounded");
+      }
+      if(a!="")
+      {
+          Materialize.toast(a, 4000, "rounded");
+      }
+  }
+</script>

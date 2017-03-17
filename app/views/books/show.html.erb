@@ -1,29 +1,31 @@
-<div class="row">
-  <div class="col-md-4">
-      <%= image_tag @book.book_img.url(:book_index), class: "book-show"  %>
-  </div>
-  <div class="col-md-8">
-      <h2> <%= @book.title %> </h2>
-      <div id="average-rating" data-score=<%= @average_reviews %> >
+<div class="book-show-page-margin">
+  <div class="row">
+    <div class="col l4">
+        <%= image_tag @book.book_img.url(:book_index), class: "book-show"  %>
+    </div>
+    <div class="col l8">
+        <h2> <%= @book.title %> </h2>
+        <div id="average-rating" data-score=<%= @average_reviews %> >
 
-      </div> <%= "  based on #{@review_count} reviews" %>
-      <p> <%= @book.author %></p>
-        <p class="text-justify"> <%= @book.description %> </p>
-      <p>
+        </div> <%= "  based on #{@review_count} reviews" %>
+        <p> <%= @book.author %></p>
+          <p class="justify"> <%= @book.description %> </p>
+        <p>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <%= render @book.reviews %>
-    <%if user_signed_in? %>
-    <%= link_to "Add review", new_book_review_path(@book) %>
-    <% end %>
+  <div class="row">
+    <div class="col l4">
+      <%= render @book.reviews %>
+      <%if user_signed_in? %>
+      <%= link_to "Add review", new_book_review_path(@book) %>
+      <% end %>
+    </div>
   </div>
+  <%if((user_signed_in?) and (current_user.id==@book.user_id))%>
+      <%= link_to "Edit Book", edit_book_path(@book) %>  |
+      <%= link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure you wanna delete this Book?"} %>
+  <%end%>
 </div>
-<%if((user_signed_in?) and (current_user.id==@book.user_id))%>
-    <%= link_to "Edit Book", edit_book_path(@book) %>  |
-    <%= link_to "Delete Book", book_path(@book), method: :delete, data: {confirm: "Are you sure you wanna delete this Book?"} %>
-<%end%>
 <script>
   $('.review-rating').raty(
   {

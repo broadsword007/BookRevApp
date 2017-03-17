@@ -1,11 +1,20 @@
 // Place all the styles related to the Books controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.book{
-  height: 400px;
-  width: 250px;
+.book-index-image{
+  height: 100%;
+  width: 100%;
+  padding: 10px;
 }
 .book-show{
   height: 400px;
   width: 250px;
+}
+.book-index-image-container{
+  height: 250px;
+  width: 300px;
+  margin-bottom: 30px;
+}
+.book-show-page-margin{
+  margin-top: 10%;
 }

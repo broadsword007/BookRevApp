@@ -1,9 +1,9 @@
 <h1>Books List</h1> <br>
 <div class="row">
     <% @books.each do |b| %>
-      <div class="col-md-3">
+      <div class="col s6 m3 l3 book-index-image-container">
           <a href="books/<%= b.id %>">
-            <%= image_tag b.book_img.url(:book_index), class: "book" %>
+            <%= image_tag b.book_img.url(:book_index), class: "book-index-image z-depth-3"%>
           </a>
       </div>
     <% end %>

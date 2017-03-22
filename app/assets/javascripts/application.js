@@ -10,9 +10,16 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require angular.js
 //= require jquery
 //= require jquery_ujs
 //= require materialize-sprockets
 //= require turbolinks
 // require bootstrap-sprockets
 //= require jquery.raty
+
+var app= angular.module("MyBookRevApp", []);
+app.contoller("bodyController", function($scope){
+
+});
+

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MyBookRevApp">
   <head>
-    <title>Book Reviews</title>
+    <title>Book Shelf</title>
+    <%= favicon_link_tag "bookshelf_logo_small.png" %>
     <%= csrf_meta_tags %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,8 +11,10 @@
   </head>
   <header>
     <nav class="nav-wrapper">
-
-      <%= link_to "Book Review", root_path , class: "brand-logo" %>
+      <div class="brand-logo row">
+        <div class="col"><%= image_tag "bookshelf_logo.png", class: "brand-logo-icon" %></div>
+        <div><%= link_to "Book Shelf", root_path , class: "white-text brand-text" %></div>
+      </div>
 
         <div class="right">
           <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select Category</a>
@@ -38,8 +41,7 @@
         </ul>
     </nav>
   </header>
-  <body>
-    <div class="container">
+  <body ng-controller="bodyController">
       <% if user_signed_in? %>
         <div class="fixed-action-btn add-button" >
           <a class="btn-floating btn-large red waves-effect waves-light tooltipped teal lighten-2" data-position="bottom" data-delay="50" data-tooltip="Add a new book" href="<%= new_book_path %>">
@@ -48,24 +50,39 @@
         </div>
       <% end %>
       <%= yield %>
-    </div>
   </body>
 
   <footer class="page-footer">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Footer Content</h5>
-          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          <h5 class="white-text">Developers</h5>
+          <div class="rounded-profile-image">
+            <%= image_tag "prof pic.jpg", class: "rounded-profile-image" %>
+          </div>
         </div>
         <div class="col l4 offset-l2 s12">
           <h5 class="white-text">Links</h5>
           <ul>
-            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Contact us</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Terms and Conditions</a></li>
           </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h5 class="white-text"> Sponsors</h5>
+    </div>
+    <div class="row">
+      <div class="col l12 m10 s10 center">
+        <div class="company-logo-Image-container">
+          <%= image_tag "payoneer_logo.png", class: "sponsor-logo-image" %>
+        </div>
+        <div class="company-logo-Image-container">
+          <%= image_tag "amazon_logo.png", class: "sponsor-logo-image" %>
+        </div>
+        <div class="company-logo-Image-container">
+          <%= image_tag "paypal_logo.png", class: "sponsor-logo-image" %>
         </div>
       </div>
     </div>

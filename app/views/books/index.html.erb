@@ -1,10 +1,43 @@
-<h1>Books List</h1> <br>
-<div class="row">
-    <% @books.each do |b| %>
-      <div class="col s6 m3 l3 book-index-image-container">
-          <a href="books/<%= b.id %>">
-            <%= image_tag b.book_img.url(:book_index), class: "book-index-image z-depth-3"%>
-          </a>
-      </div>
+<div class="carousel-style">
+  <div class="latest-books-label">
+    <p class="white-text">Latest Books</p>
+  </div>
+  <div class="carousel fill-parent">
+    <% @books.each do |book| %>
+        <a class="carousel-item z-depth-4" href="#one!"><%= image_tag book.book_img.url(:book_index), class: "round-book-pic" %></a>
     <% end %>
+  </div>
+  <div class="carousel-left-arrow">
+    <%= image_tag "arrow-left.png", class:"fill-parent" %>
+  </div>
+  <div class="carousel-right-arrow">
+    <%= image_tag "arrow-left.png", class:"fill-parent" %>
+  </div>
 </div>
+<div class="container">
+  <h1>Books List</h1> <br>
+  <div class="row">
+      <% @books.each do |b| %>
+        <div class="col s6 m3 l3 book-index-image-container">
+            <a href="books/<%= b.id %>">
+              <%= image_tag b.book_img.url(:book_index), class: "book-index-image z-depth-3"%>
+            </a>
+        </div>
+      <% end %>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+    $('.carousel').carousel({shift: 100, padding: 100});
+});
+</script>
+<script>
+    $('.carousel-left-arrow').click(function () {
+        $('.carousel').carousel('prev');
+    });
+</script>
+<script>
+    $('.carousel-right-arrow').click(function () {
+        $('.carousel').carousel('next');
+    });
+</script>

@@ -1,44 +1,74 @@
 <!DOCTYPE html>
-<html ng-app="MyBookRevApp">
+<html ng-app="MyBookRevApp" ng-scroll-down="handle_scroll_down()">
   <head>
     <title>Book Shelf</title>
     <%= favicon_link_tag "bookshelf_logo_small.png" %>
     <%= csrf_meta_tags %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <% if controller_name=="sessions" and action_name=="new" %>
+      <%= stylesheet_link_tag    'loginlogout', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <% end %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <header>
+  <header class="page-header">
     <nav class="nav-wrapper">
-      <div class="brand-logo row">
-        <div class="col"><%= image_tag "bookshelf_logo.png", class: "brand-logo-icon" %></div>
-        <div><%= link_to "Book Shelf", root_path , class: "white-text brand-text" %></div>
+      <div class="brand-logo row left">
+        <div class="col brand-logo-icon-container left"><%= image_tag "bookshelf_logo.png", class: "fill-parent" %></div>
+        <div style="height: 100%;"><%= link_to "Book Shelf", root_path , class: "white-text brand-text" %></div>
       </div>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <% if user_signed_in? %>
+            <div class="row" style="margin-bottom: 0px;">
+              <div class="col">
+                <a class='dropdown-profile-image fill-parent' href='#' data-activates='dropdown2'>
+                    <%= image_tag current_user.profile_image.url, class: "rounded-profile-image vertical-parent-center" %>
+                </a>
 
-        <div class="right">
-          <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select Category</a>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown2' class='dropdown-content white'>
+                  <li><a href="#!">one</a></li>
+                  <li><%= link_to "Log out", destroy_user_session_path, method: "delete"  %></li>
+                </ul>
+              </div>
+            </div>
+          <% else%>
+            <li>
+              <%= link_to "Signup", new_user_registration_path %>
+            </li>
+            <li>
+              <%= link_to "Login", new_user_session_path %>
+            </li>
 
-          <!-- Dropdown Structure -->
-          <ul id='dropdown1' class='dropdown-content'>
-            <% Category.all.each do |cat| %>
-                <li><a href="<%=books_path(category: cat.name) %>"> <%= cat.name %> </a></li>
-            <% end %>
-          </ul>
-        </div>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <% if user_signed_in? %>
-                <%= link_to "Log out", destroy_user_session_path, method: "delete"  %>
-            <% else%>
-              <li>
-                <%= link_to "Signup", new_user_registration_path %>
-              </li>
-              <li>
-                <%= link_to "Login", new_user_session_path %>
-              </li>
+          <% end %>
+      </ul>
+      <ul id="mobile-demo" class="side-nav">
+        <% if user_signed_in? %>
+            <div class="row" style="margin-bottom: 0px;">
+              <div class="col">
+                <a class='dropdown-profile-image fill-parent' href='#' data-activates='dropdown2'>
+                  <%= image_tag current_user.profile_image.url, class: "rounded-profile-image vertical-parent-center" %>
+                </a>
 
-            <% end %>
-        </ul>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown2' class='dropdown-content white'>
+                  <li><a href="#!">one</a></li>
+                  <li><%= link_to "Log out", destroy_user_session_path, method: "delete"  %></li>
+                </ul>
+              </div>
+            </div>
+        <% else%>
+            <li>
+              <%= link_to "Signup", new_user_registration_path %>
+            </li>
+            <li>
+              <%= link_to "Login", new_user_session_path %>
+            </li>
+
+        <% end %>
+      </ul>
     </nav>
   </header>
   <body ng-controller="bodyController">
@@ -55,17 +85,18 @@
   <footer class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col l6 s12">
+        <div class="col l6 s12 standard-top-margin">
           <h5 class="white-text">Developers</h5>
           <div class="rounded-profile-image">
-            <%= image_tag "prof pic.jpg", class: "rounded-profile-image" %>
+            <%= image_tag "prof pic.jpg", class: "rounded-developer-image" %>
           </div>
         </div>
-        <div class="col l4 offset-l2 s12">
+        <div class="col l4 offset-l2 s12 standard-top-margin">
           <h5 class="white-text">Links</h5>
           <ul>
             <li><a class="grey-text text-lighten-3" href="#!">Contact us</a></li>
             <li><a class="grey-text text-lighten-3" href="#!">Terms and Conditions</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
@@ -74,14 +105,14 @@
       <h5 class="white-text"> Sponsors</h5>
     </div>
     <div class="row">
-      <div class="col l12 m10 s10 center">
-        <div class="company-logo-Image-container">
+      <div class="col l12 m12 s12 center">
+        <div class="company-logo-Image-container  standard-top-margin">
           <%= image_tag "payoneer_logo.png", class: "sponsor-logo-image" %>
         </div>
-        <div class="company-logo-Image-container">
+        <div class="company-logo-Image-container standard-top-margin">
           <%= image_tag "amazon_logo.png", class: "sponsor-logo-image" %>
         </div>
-        <div class="company-logo-Image-container">
+        <div class="company-logo-Image-container standard-top-margin">
           <%= image_tag "paypal_logo.png", class: "sponsor-logo-image" %>
         </div>
       </div>
@@ -89,9 +120,9 @@
     <div class="footer-copyright">
       <div class="container">
         <div class="row">
-          <div class="col l6"> <a class="white-text">© 2017 Paradox Software Solutions</a></div>
-          <div class="col l6">
-            <div class="right">
+          <div class="col l6 s12 standard-top-margin"> <a class="white-text">© 2017 Paradox Software Solutions</a></div>
+          <div class="col l6 s12">
+            <div class="center standard-top-margin">
               <%= image_tag "twitter.png", class: "waves-effect waves-red social-media-image" %>
               <%= image_tag "facebook.png", class: "waves-effect waves-red social-media-image" %>
               <%= image_tag "instagram.png", class: "waves-effect waves-red social-media-image" %>
@@ -116,5 +147,16 @@
       {
           Materialize.toast(a, 4000, "rounded");
       }
+      $('.dropdown-profile-image').dropdown({
+              inDuration: 300,
+              outDuration: 225,
+              constrainWidth: false, // Does not change width of dropdown to that of the activator
+              hover: false, // Activate on hover
+              gutter: 0, // Spacing from edge
+              belowOrigin: true, // Displays dropdown below the button
+              alignment: 'center', // Displays dropdown with edge aligned to the left of button
+              stopPropagation: false // Stops event propagation
+          }
+      );
   }
 </script>

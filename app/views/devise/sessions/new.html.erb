@@ -1,17 +1,28 @@
-<h2>Log in</h2>
+<div id="login_page_main" class="page-top-margin login-background" >
+  <div id="login_rec" class="login_box_container">
+    <div class="login-box" style="padding: 5%;">
+    <form novalidate="novalidate" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 
-<form novalidate="novalidate" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post">
-  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <label id="abcde" class="control-label email optional" for="user_email">Email</label>
+        <input class="form-control string email optional" autofocus="autofocus" value="" name="user[email]" id="user_email" type="email">
+        <label class="control-label password optional active" for="user_password">Password</label>
+        <input class="form-control password optional" name="user[password]" id="user_password" type="password">
+        <input  name="user[remember_me]" id="user_remember_me" type="checkbox">
+        <label for="user_remember_me">Remember me!</label>
+      <div class="form-actions">
+        <input name="commit" value="Log in" class="btn btn-default" data-disable-with="Log in" type="submit">
+      </div>
 
-    <label class="control-label email optional" for="user_email">Email</label>
-    <input class="form-control string email optional" autofocus="autofocus" value="" name="user[email]" id="user_email" type="email">
-    <label class="control-label password optional active" for="user_password">Password</label>
-    <input class="form-control password optional" name="user[password]" id="user_password" type="password">
-    <input  name="user[remember_me]" id="user_remember_me" type="checkbox">
-    <label for="user_remember_me">Remember me!</label>
-  <div class="form-actions">
-    <input name="commit" value="Log in" class="btn btn-default" data-disable-with="Log in" type="submit">
+    </form>
+    <%= render "devise/shared/links" %>
+    </div>
   </div>
-
-</form>
-<%= render "devise/shared/links" %>
+</div>
+<script>
+  $(document).ready()
+  {
+      $('#login_page_main').css("height", '100vh');
+      $('#login_page_main').css("height", $('#login_page_main').height()-$('.page-header').height());
+  }
+</script>

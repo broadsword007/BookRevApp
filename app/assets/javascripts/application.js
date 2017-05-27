@@ -20,6 +20,11 @@
 
 var app= angular.module("MyBookRevApp", []);
 app.contoller("bodyController", function($scope){
-
+    angular.element($window).bind("scroll", function (e) {
+        alert("Scrolled!")
+    });
+    $scope.handle_scroll_down= function () {
+        alert("scrolled")
+    };
 });
 

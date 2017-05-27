@@ -1,29 +1,40 @@
-<div class="carousel-style">
-  <div class="latest-books-label">
-    <p class="white-text">Latest Books</p>
-  </div>
-  <div class="carousel fill-parent">
-    <% @books.each do |book| %>
-        <a class="carousel-item z-depth-4" href="#one!"><%= image_tag book.book_img.url(:book_index), class: "round-book-pic" %></a>
-    <% end %>
-  </div>
-  <div class="carousel-left-arrow">
-    <%= image_tag "arrow-left.png", class:"fill-parent" %>
-  </div>
-  <div class="carousel-right-arrow">
-    <%= image_tag "arrow-left.png", class:"fill-parent" %>
-  </div>
-</div>
-<div class="container">
-  <h1>Books List</h1> <br>
-  <div class="row">
-      <% @books.each do |b| %>
-        <div class="col s6 m3 l3 book-index-image-container">
-            <a href="books/<%= b.id %>">
-              <%= image_tag b.book_img.url(:book_index), class: "book-index-image z-depth-3"%>
-            </a>
-        </div>
+<div class="page-top-margin">
+  <div class="carousel-style">
+    <div class="latest-books-label">
+      <a class="white-text">Latest Books</a>
+    </div>
+    <div class="carousel fill-parent">
+      <% Book.all.each do |book| %>
+          <a class="carousel-item z-depth-4" href="<%= book_path(book) %>"> <%= image_tag book.book_img.url(:book_index), class: "round-book-pic" %></a>
       <% end %>
+    </div>
+    <div class="carousel-left-arrow hide-on-med-and-down">
+      <%= image_tag "arrow-left.png", class:"fill-parent" %>
+    </div>
+    <div class="carousel-right-arrow hide-on-med-and-down">
+      <%= image_tag "arrow-left.png", class:"fill-parent" %>
+    </div>
+  </div>
+  <div class="container">
+    <h1 class="inline">Books List</h1>
+    <div class="right category_selector_control">
+      <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Select Category</a>
+      <!-- Dropdown Structure -->
+      <ul id='dropdown1' class='dropdown-content'>
+        <% Category.all.each do |cat| %>
+            <li><a href="<%=books_path(category: cat.name) %>"> <%= cat.name %> </a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="row">
+        <% @books.each do |b| %>
+          <div class="col s6 m3 l3 book-index-image-container">
+              <a href="books/<%= b.id %>">
+                <%= image_tag b.book_img.url(:book_index), class: "book-index-image z-depth-3"%>
+              </a>
+          </div>
+        <% end %>
+    </div>
   </div>
 </div>
 <script>
